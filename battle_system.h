@@ -17,6 +17,7 @@ public:
     void InitBattleTextGroup(tgui::Gui &gui);
     void InitFightSwitchChoiceGroup(tgui::Gui &gui);
     void InitPokemonSwitchGroup(tgui::Gui &gui);
+    void InitPokemonUI(tgui::Gui &gui);
 
     // Used to display messages to the user during battle.
     void SetBattleText(std::string text) { m_btext_label->setText(text); }
@@ -46,6 +47,9 @@ public:
     // Accessor and mutator for m_last_command
     inline Command GetLastCommand() { return m_last_command; }
     inline void SetLastCommand(Command last_command) { m_last_command = last_command; }
+
+    inline void SetPlayerPokemonHpLabelText(std::string text) { m_player_pokemon_hp_label->setText(text); }
+    inline void SetEnemyPokemonHpLabelText(std::string text) { m_enemy_pokemon_hp_label->setText(text); }
 
     // Draw sprites
     void DrawAllSprites(sf::RenderWindow &window);
@@ -86,15 +90,19 @@ private:
     std::vector<sf::Sprite *> m_sprite_pointers;
     sf::Sprite m_player_pokemon_sprite;
     sf::Texture m_player_pokemon_texture;
+
+    sf::Sprite m_enemy_pokemon_sprite;
+    sf::Texture m_enemy_pokemon_texture;
+
+    // HP widgets
+    tgui::Label::Ptr m_player_pokemon_hp_label;
+    tgui::Label::Ptr m_enemy_pokemon_hp_label;
 };
 
 class BattleSystem
 {
 public:
-    BattleSystem(BattleUI *battle_ui)
-        : m_player_trainer("PLAYER", Pokemon(0, "Mimikyu", 3, 1, 5), Pokemon(1, "Bibikyu", 5, 2, 1)),
-          m_enemy_trainer("ENEMY", Pokemon(2, "Pikachu", 3, 1, 3), Pokemon(3, "Bikabu", 5, 0, 10)),
-          m_is_battle_over(false), m_battle_ui(battle_ui) {}
+    BattleSystem(BattleUI *battle_ui);
 
     // Prompts the player to choose
     Command GetPlayerInput();

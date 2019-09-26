@@ -3,6 +3,15 @@
 using namespace std;
 
 #pragma region Battle System
+BattleSystem::BattleSystem(BattleUI *battle_ui) 
+    : m_player_trainer("PLAYER", Pokemon(0, "Mimikyu", 3, 1, 5), Pokemon(1, "Bibikyu", 5, 2, 1)),
+      m_enemy_trainer("ENEMY", Pokemon(2, "Pikachu", 3, 1, 3), Pokemon(3, "Bikabu", 5, 0, 10)),
+      m_is_battle_over(false), m_battle_ui(battle_ui) 
+{
+    m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
+    m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+}
+
 //Prompts the player to choose.
 Command BattleSystem::GetPlayerInput()
 {
@@ -87,6 +96,15 @@ void BattleSystem::RunTurn()
             Pokemon *switch_pokemon = trainers_in_order[i]->GetPokemon(trainers_in_order[i]->GetRecentCommand().selection);
             m_battle_ui->DisplayText(trainers_in_order[i]->GetName() + " withdrew " + trainers_in_order[i]->GetLeadName() + " and sent in " + switch_pokemon->GetName() + "!");
             trainers_in_order[i]->SwitchPokemon(trainers_in_order[i]->GetRecentCommand().selection);
+            
+            if (trainers_in_order[i] == &m_player_trainer)
+            {
+                m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
+            }
+            else 
+            {
+                m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+            }
         }
     }
 
@@ -99,6 +117,16 @@ void BattleSystem::RunTurn()
             // Decrement health appropriately
             int target_index = (i == 0) ? 1 : 0;
             int damage_taken = trainers_in_order[i]->GetLead()->Attack(trainers_in_order[target_index]->GetLead());
+
+            if (trainers_in_order[target_index] == &m_player_trainer)
+            {
+                m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
+            }
+            else 
+            {
+                m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+            }
+
             m_battle_ui->DisplayText(trainers_in_order[i]->GetLeadName() + " attacked! " + trainers_in_order[target_index]->GetLeadName() + " took " + to_string(damage_taken) + " damage!");
             m_battle_ui->DisplayText(trainers_in_order[target_index]->GetLeadName() + " has " + to_string(trainers_in_order[target_index]->GetLeadHP()) + " HP left!");
 
@@ -130,6 +158,7 @@ void BattleSystem::RunTurn()
                         Pokemon *switch_pokemon = m_player_trainer.GetPokemon(switch_pokemon_num);
                         m_battle_ui->DisplayText(m_player_trainer.GetName() + " sent in " + switch_pokemon->GetName() + "!");
                         m_player_trainer.SwitchPokemon(switch_pokemon_num);
+                        m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
                     }
                     else
                     {
@@ -137,6 +166,7 @@ void BattleSystem::RunTurn()
                         Pokemon *switch_pokemon = m_enemy_trainer.GetPokemon(switch_pokemon_num);
                         m_battle_ui->DisplayText(m_enemy_trainer.GetName() + " sent in " + switch_pokemon->GetName() + "!");
                         m_enemy_trainer.SwitchPokemon(switch_pokemon_num);
+                        m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
                     }
                 }     
             }
@@ -152,8 +182,6 @@ void BattleSystem::RunTurn()
     }
 }
 
-
-
 void BattleSystem::PrintReport()
 {
     cout << "Battle between " << m_player_trainer.GetName() << " (player) using " << m_player_trainer.GetLead()->GetName() 
@@ -168,15 +196,7 @@ BattleUI::BattleUI(tgui::Gui &gui)
     InitBattleTextGroup(gui);
     InitFightSwitchChoiceGroup(gui);
     InitPokemonSwitchGroup(gui);
-
-    if (!m_player_pokemon_texture.loadFromFile("Images/mimikyu.jpg"))
-    {
-        cout << "Cannot load image!" << endl;
-        return;
-    }
-    m_player_pokemon_sprite.setTexture(m_player_pokemon_texture);
-    m_player_pokemon_sprite.setPosition(50.f, 50.f);
-    m_sprite_pointers.push_back(&m_player_pokemon_sprite);
+    InitPokemonUI(gui);
 
     m_is_user_ready = false;
 }
@@ -328,6 +348,46 @@ void BattleUI::InitPokemonSwitchGroup(tgui::Gui &gui)
     m_switch_pokemon_labels[3]->setPosition("60%", "80%");
     m_switch_pokemon_labels[4]->setPosition("30%", "90%");
     m_switch_pokemon_labels[5]->setPosition("60%", "90%");
+}
+
+void BattleUI::InitPokemonUI(tgui::Gui &gui)
+{
+    if (!m_player_pokemon_texture.loadFromFile("Images/mimikyu.jpg"))
+    {
+        cout << "Cannot load image!" << endl;
+        return;
+    }
+    m_player_pokemon_sprite.setTexture(m_player_pokemon_texture);
+    m_player_pokemon_sprite.setPosition(50.f, 70.f);
+    m_sprite_pointers.push_back(&m_player_pokemon_sprite);
+
+    if (!m_enemy_pokemon_texture.loadFromFile("Images/bikabu.jpg"))
+    {
+        cout << "Cannot load image!" << endl;
+    }
+    m_enemy_pokemon_sprite.setTexture(m_enemy_pokemon_texture);
+    m_enemy_pokemon_sprite.setPosition(1000.f, 70.f);
+    m_sprite_pointers.push_back(&m_enemy_pokemon_sprite);
+
+
+    m_player_pokemon_hp_label = tgui::Label::create();
+    m_player_pokemon_hp_label->setTextSize(text_size);
+    m_player_pokemon_hp_label->setSize("30%", "10%");
+    m_player_pokemon_hp_label->setPosition("10%", "0%");
+    m_player_pokemon_hp_label->getRenderer()->setBackgroundColor(bg_color);
+    m_player_pokemon_hp_label->getRenderer()->setTextColor(text_color);
+    m_player_pokemon_hp_label->getRenderer()->setPadding(padding);
+
+    m_enemy_pokemon_hp_label = tgui::Label::create();
+    m_enemy_pokemon_hp_label->setTextSize(text_size);
+    m_enemy_pokemon_hp_label->setSize("30%", "10%");
+    m_enemy_pokemon_hp_label->setPosition("60%", "0%");
+    m_enemy_pokemon_hp_label->getRenderer()->setBackgroundColor(bg_color);
+    m_enemy_pokemon_hp_label->getRenderer()->setTextColor(text_color);
+    m_enemy_pokemon_hp_label->getRenderer()->setPadding(padding);
+
+    gui.add(m_player_pokemon_hp_label);
+    gui.add(m_enemy_pokemon_hp_label);
 }
 
 // Hides all bottom text bar groups
