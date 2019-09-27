@@ -352,7 +352,7 @@ void BattleUI::InitPokemonSwitchGroup(tgui::Gui &gui)
 
 void BattleUI::InitPokemonUI(tgui::Gui &gui)
 {
-    if (!m_player_pokemon_texture.loadFromFile("Images/mimikyu.jpg"))
+    if (!m_player_pokemon_texture.loadFromFile("images/mimikyu.jpg"))
     {
         cout << "Cannot load image!" << endl;
         return;
@@ -361,7 +361,7 @@ void BattleUI::InitPokemonUI(tgui::Gui &gui)
     m_player_pokemon_sprite.setPosition(50.f, 70.f);
     m_sprite_pointers.push_back(&m_player_pokemon_sprite);
 
-    if (!m_enemy_pokemon_texture.loadFromFile("Images/bikabu.jpg"))
+    if (!m_enemy_pokemon_texture.loadFromFile("images/bikabu.jpg"))
     {
         cout << "Cannot load image!" << endl;
     }
