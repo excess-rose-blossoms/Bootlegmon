@@ -19,7 +19,7 @@
                 "src/pokemon.cpp",
                 "src/poke_reader.cpp",
                 "-o",
-                "Bootlegmon"
+                "build/Bootlegmon"
             ],
             "problemMatcher": []
         }
