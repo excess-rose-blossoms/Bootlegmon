@@ -10,6 +10,8 @@ BattleSystem::BattleSystem(BattleUI *battle_ui)
 {
     m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
     m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+    m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
+    m_battle_ui->SetEnemyPokemonSprite(m_enemy_trainer.GetLead()->GetImageName());
 }
 
 //Prompts the player to choose.
@@ -100,10 +102,12 @@ void BattleSystem::RunTurn()
             if (trainers_in_order[i] == &m_player_trainer)
             {
                 m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
+                m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
             }
             else 
             {
                 m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+                m_battle_ui->SetEnemyPokemonSprite(m_enemy_trainer.GetLead()->GetImageName());
             }
         }
     }
@@ -158,6 +162,7 @@ void BattleSystem::RunTurn()
                         Pokemon *switch_pokemon = m_player_trainer.GetPokemon(switch_pokemon_num);
                         m_battle_ui->DisplayText(m_player_trainer.GetName() + " sent in " + switch_pokemon->GetName() + "!");
                         m_player_trainer.SwitchPokemon(switch_pokemon_num);
+                        m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
                         m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
                     }
                     else
@@ -167,6 +172,7 @@ void BattleSystem::RunTurn()
                         m_battle_ui->DisplayText(m_enemy_trainer.GetName() + " sent in " + switch_pokemon->GetName() + "!");
                         m_enemy_trainer.SwitchPokemon(switch_pokemon_num);
                         m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+                        m_battle_ui->SetEnemyPokemonSprite(m_enemy_trainer.GetLead()->GetImageName());
                     }
                 }     
             }
@@ -474,6 +480,26 @@ void BattleUI::DrawAllSprites(sf::RenderWindow &window)
     {
         window.draw(*m_sprite_pointers[i]);
     }
+}
+
+void BattleUI::SetPlayerPokemonSprite(std::string image_name)
+{
+    if (!m_player_pokemon_texture.loadFromFile("images/" + image_name))
+    {
+        cout << "Cannot load image!" << endl;
+        return;
+    }
+    m_player_pokemon_sprite.setTexture(m_player_pokemon_texture);
+}
+
+void BattleUI::SetEnemyPokemonSprite(std::string image_name)
+{
+    if (!m_enemy_pokemon_texture.loadFromFile("images/" + image_name))
+    {
+        cout << "Cannot load image!" << endl;
+        return;
+    }
+    m_enemy_pokemon_sprite.setTexture(m_enemy_pokemon_texture);
 }
 
 #pragma endregion Battle UI

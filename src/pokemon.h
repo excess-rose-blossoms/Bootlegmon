@@ -7,8 +7,8 @@
 class Pokemon
 {
     public:
-        Pokemon(int dex_number, Name name, Stat hp, Stat atk, Stat spd) : m_dex_number(dex_number), m_name(name), m_hp(hp), m_atk(atk), m_spd(spd) {}
-        Pokemon() : m_name(InvalidPokemonName){}
+        Pokemon(int dex_number, Name name, Stat hp, Stat atk, Stat spd);
+        Pokemon() : m_name(InvalidPokemonName) {}
 
         int Attack(Pokemon *enemy) 
         { 
@@ -28,6 +28,7 @@ class Pokemon
         inline Stat GetHP() { return m_hp; }
         inline Stat GetAtk() { return m_atk; }
         inline Stat GetSpd() { return m_spd; }
+        inline std::string GetImageName() { return m_image_name; }
 
         void SetDexNumber(int dex_number) { m_dex_number = dex_number; }
         void SetName(Name name) { m_name = name; }
@@ -53,4 +54,6 @@ class Pokemon
         Stat m_hp;
         Stat m_atk;
         Stat m_spd;
+
+        std::string m_image_name;
 };

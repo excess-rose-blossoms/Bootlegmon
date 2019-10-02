@@ -51,6 +51,9 @@ public:
     inline void SetPlayerPokemonHpLabelText(std::string text) { m_player_pokemon_hp_label->setText(text); }
     inline void SetEnemyPokemonHpLabelText(std::string text) { m_enemy_pokemon_hp_label->setText(text); }
 
+    void SetPlayerPokemonSprite(std::string image_name);
+    void SetEnemyPokemonSprite(std::string image_name);
+
     // Draw sprites
     void DrawAllSprites(sf::RenderWindow &window);
 
