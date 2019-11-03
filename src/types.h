@@ -4,6 +4,8 @@
 typedef std::string Name;
 // Used only for Pokemon stats like HP, Atk, Def, etc...
 typedef int Stat;
+
+// Used only for Pokemon moves.
 typedef int Power;
 typedef int Accuracy;
 

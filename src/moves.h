@@ -3,7 +3,8 @@
 
 struct Move
 {
+    Name name;
     Power power;
     Accuracy accuracy;
-    Move(Power power, Accuracy accuracy) : power(power), accuracy(accuracy){}
+    Move(Name name, Power power, Accuracy accuracy) : name(name), power(power), accuracy(accuracy){}
 };

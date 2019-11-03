@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "clang++",
+            "command": "g++",
             "args": [
                 "-std=c++14",
                 "-ltgui",

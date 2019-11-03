@@ -8,6 +8,7 @@
 #include "pokemon.h"
 #include "types.h"
 #include "poke_reader.h"
+#include "moves.h"
 
 using namespace std;
 
@@ -21,35 +22,36 @@ void RunBattleLoop(BattleSystem &battle_system)
 
 int main()
 {
-    // Create the window, GUI, and UI.
-    sf::RenderWindow window{{1600, 1000}, "Bootlegmon"};
-    tgui::Gui gui{window};
+    // // Create the window, GUI, and UI.
+    // sf::RenderWindow window{{1600, 1000}, "Bootlegmon"};
+    // tgui::Gui gui{window};
 
-    BattleUI battle_ui(gui);
+    // BattleUI battle_ui(gui);
 
-    // Create a second thread to run the battle loop.
-    BattleSystem battle_system(&battle_ui);
-    thread battle_thread(RunBattleLoop, ref(battle_system));
+    // // Create a second thread to run the battle loop.
+    // BattleSystem battle_system(&battle_ui);
+    // thread battle_thread(RunBattleLoop, ref(battle_system));
 
-    // Poll and draw widgets.
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
+    // // Poll and draw widgets.
+    // while (window.isOpen())
+    // {
+    //     sf::Event event;
+    //     while (window.pollEvent(event))
+    //     {
+    //         if (event.type == sf::Event::Closed)
+    //         {
+    //             window.close();
+    //         }
 
-            gui.handleEvent(event); // Pass the event to the widgets
-        }
+    //         gui.handleEvent(event); // Pass the event to the widgets
+    //     }
 
-        window.clear();
-        gui.draw(); // Draw all widgets
-        battle_ui.DrawAllSprites(window); // Draw all sprites
-        window.display();
-    }
+    //     window.clear();
+    //     gui.draw(); // Draw all widgets
+    //     battle_ui.DrawAllSprites(window); // Draw all sprites
+    //     window.display();
+    // }
+
 }
 
 // #include <TGUI/TGUI.hpp>
