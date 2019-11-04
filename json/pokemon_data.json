@@ -1,4 +1,4 @@
 {
-"pikachu":{"hp":10,"moves":[1,2,5]},
-"bikabu":{"hp":15,"moves":[1,2,3]}
+"Pikachu":{"hp":10,"moves":[1,2,5]},
+"Bikabu":{"hp":15,"moves":[1,2,3]}
 }

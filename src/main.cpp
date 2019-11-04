@@ -22,30 +22,60 @@ void RunBattleLoop(BattleSystem &battle_system)
     }
 }
 
+class Pokemon_Reader
+{
+    public:
+    Pokemon_Reader(std::string file_path)
+    {
+        boost::property_tree::read_json(file_path, root);
+    }
+
+    // Prints out the stats of the Pokemon with name pokemon_name.
+    void MakeReport(std::string pokemon_name)
+    {
+        if (!root.get_child_optional(pokemon_name).is_initialized())
+        {
+            cout << "NOT FOUND"<<endl;
+            return;
+        }
+
+        cout << "NAME: " << pokemon_name << endl;
+        for (boost::property_tree::ptree::value_type &pokemon: root.get_child(pokemon_name))
+        {
+            cout << pokemon.first << endl;
+            //cout << pokemon.second.get_value("hp") << endl;
+        }
+    }
+    private:
+        boost::property_tree::ptree root;
+};
+
 int main()
 {
-    // Short alias for this namespace
-    namespace pt = boost::property_tree;
+    Pokemon_Reader reader("json/pokemon_data.json");
+    reader.MakeReport("Pikachu");
+    // // Short alias for this namespace
+    // namespace pt = boost::property_tree;
 
-    // Create a root
-    pt::ptree root;
+    // // Create a root
+    // pt::ptree root;
 
-    // Load the json file in this ptree
-    pt::read_json("json/pokemon_data.json", root);
+    // // Load the json file in this ptree
+    // pt::read_json("json/pokemon_data.json", root);
 
 
-    ////////////////////
-    /// READING      ///
-    ////////////////////
+    // ////////////////////
+    // /// READING      ///
+    // ////////////////////
 
-    std::cout << "Reading pokemon_data.json :" << std::endl;
-    //string pika_name = root.get<string>("name");
-    // pt::ptree &pokemon = root.get_child("pikachu");
+    // std::cout << "Reading pokemon_data.json :" << std::endl;
+    // //string pika_name = root.get<string>("name");
+    // // pt::ptree &pokemon = root.get_child("pikachu");
 
-    for (pt::ptree::value_type &pokemon: root.get_child("pikachu"))
-    {
-        cout << pokemon.second.get_value("hp") << endl;
-    }
+    // for (pt::ptree::value_type &pokemon: root.get_child("pikachu"))
+    // {
+    //     cout << pokemon.second.get_value("hp") << endl;
+    // }
 }
 
 // int main()
