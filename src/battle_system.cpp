@@ -4,26 +4,10 @@ using namespace std;
 
 #pragma region Battle System
 BattleSystem::BattleSystem(BattleUI *battle_ui, PokemonReader *pokemon_reader) 
-    : m_is_battle_over(false), m_battle_ui(battle_ui), m_pokemon_reader(pokemon_reader)
+    :   m_is_battle_over(false), m_battle_ui(battle_ui), m_pokemon_reader(pokemon_reader), 
+        m_player_trainer("PLAYER", pokemon_reader->MakePoke("Mimikyu"), pokemon_reader->MakePoke("Bibikyu")),
+        m_enemy_trainer("ENEMY", pokemon_reader->MakePoke("Pikachu"), pokemon_reader->MakePoke("Bikabu"))
 {
-    // Initialize trainers
-    m_player_trainer = Trainer("PLAYER", pokemon_reader->MakePoke("Mimikyu"), pokemon_reader->MakePoke("Bibikyu"));
-    std::cout << "ADDRESS" << m_player_trainer.GetLead() << std::endl;
-    m_enemy_trainer = TrainerAI("ENEMY", pokemon_reader->MakePoke("Pikachu"), pokemon_reader->MakePoke("Bikabu"));
-    
-    //REMOVE
-    if (m_player_trainer.GetLead())
-    {
-        cout << "YES!" << m_player_trainer.GetLead()->GetName() <<endl;
-        std::cout << "ADDRESS" << m_player_trainer.GetLead() << std::endl;
-    }
-    else
-    {
-        cout << "NO!" << endl;
-    }
-
-    cout << "IMNAME:" << m_player_trainer.GetLead()->GetImageName() << endl;
-
     // Initialize UI
     cout << m_player_trainer.GetLead()->GetName() << endl;
     m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));

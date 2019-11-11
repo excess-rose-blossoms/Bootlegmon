@@ -18,12 +18,6 @@ class Trainer
             m_num_pokemon = m_num_live_pokemon = 2;
 
             m_lead_pokemon = &m_pokemon_party[0];
-
-            //REMOVE
-            std::cout << "ADDRESS: " << &m_pokemon_party[0] << std::endl;
-            std::cout << "BEFOREIMNAME: " << GetLead()->GetImageName() << std::endl;
-            std::cout << "TRAINER INIT DONE" << std::endl;
-            std::cout << "ADDRESS: " << &m_pokemon_party[0] << std::endl;
         }
 
         inline Pokemon *GetLead() { return m_lead_pokemon; }
@@ -96,6 +90,8 @@ class Trainer
         int m_num_live_pokemon;
         //Used to store the most recent command the trainer gave.
         Command m_recent_command;
+        //REMOVE
+        Pokemon testpoke;
 };
 
 class TrainerAI: public Trainer
