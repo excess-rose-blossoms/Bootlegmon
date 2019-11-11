@@ -2,6 +2,53 @@
 
 #pragma region Trainer
 
+// Constructor
+Trainer::Trainer(Name name, Pokemon p1, Pokemon p2, Pokemon p3, Pokemon p4, Pokemon p5, Pokemon p6)
+    :   m_pokemon_party{{p1},{p2},{p3},{p4},{p5},{p6}}
+{
+    m_name = name;
+    // CHANGE
+    m_num_pokemon = m_num_live_pokemon = 2;
+    m_lead_pokemon = &m_pokemon_party[0];
+}
+
+// Returns the Pokemon at the party slot specified by pokemon_num.
+Pokemon *Trainer::GetPokemon(int pokemon_num)
+{
+    if (pokemon_num >= m_num_pokemon)
+        return nullptr;
+    else
+        return &m_pokemon_party[pokemon_num];
+}
+
+// Changes the lead Pokemon to the Pokemon at the party slot specified by pokemon_num
+void Trainer::SwitchPokemon(int pokemon_num)
+{
+    if (pokemon_num >= m_num_pokemon)
+        return;
+    else
+        m_lead_pokemon = &m_pokemon_party[pokemon_num];
+}
+
+// Prints out a list of Pokemon in the trainer's party along with their condition.
+void Trainer::ListPartyMembers()
+{
+    Name pokemon_name;
+    Name suffix;
+    for (int i = 0; i < m_num_pokemon; i++)
+    {
+        if (m_pokemon_party[i].HasFainted())
+            suffix = " (fainted)";
+        else if (&m_pokemon_party[i] == m_lead_pokemon)
+            suffix = " (lead)";
+        else
+            suffix = "";
+
+        pokemon_name = m_pokemon_party[i].GetName() + suffix;
+        std::cout << i << ": " << pokemon_name << std::endl;
+    }
+}
+
 #pragma endregion Trainer
 
 #pragma region Trainer AI

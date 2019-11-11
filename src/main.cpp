@@ -14,53 +14,6 @@
 
 using namespace std;
 
-// class TestPokemon
-// {
-//     public:
-//         TestPokemon(std::string name)
-//         {
-//             m_name = name;
-//         }
-
-//         string GetName() { return m_name; }
-
-//     private:
-//         std::string m_name;
-// };
-
-// class TestTrainer
-// {
-//     public:
-//         TestTrainer(TestPokemon pokemon)
-//         {
-//             m_pokemon = pokemon;
-//         }
-
-//         TestPokemon *GetLead() { return m_lead; }
-
-//     private:
-//         TestPokemon m_pokemon;
-//         TestPokemon *m_lead;
-// };
-
-// class TestBattleSystem
-// {
-//     public:
-//         TestBattleSystem() :tr
-//         {
-//             trainer = TestTrainer(TestPokemon("Pikachu"));
-//             cout << "NAME: " << trainer.GetLead()->GetName() << endl;
-//         }
-
-//     private:
-//         TestTrainer trainer;
-// };
-
-// int main()
-// {
-//     TestBattleSystem();
-// }
-
 void RunBattleLoop(BattleSystem &battle_system)
 {
     while (!battle_system.IsBattleOver())

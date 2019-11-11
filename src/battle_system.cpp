@@ -9,7 +9,6 @@ BattleSystem::BattleSystem(BattleUI *battle_ui, PokemonReader *pokemon_reader)
         m_enemy_trainer("ENEMY", pokemon_reader->MakePoke("Pikachu"), pokemon_reader->MakePoke("Bikabu"))
 {
     // Initialize UI
-    cout << m_player_trainer.GetLead()->GetName() << endl;
     m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
     m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
     m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
