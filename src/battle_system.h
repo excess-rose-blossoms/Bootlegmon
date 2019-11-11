@@ -9,6 +9,7 @@
 #include "pokemon.h"
 #include "trainer.h"
 #include "types.h"
+#include "pokemon_reader.h"
 
 class BattleUI
 {
@@ -105,7 +106,7 @@ private:
 class BattleSystem
 {
 public:
-    BattleSystem(BattleUI *battle_ui);
+    BattleSystem(BattleUI *battle_ui, PokemonReader *pokemon_reader);
 
     // Prompts the player to choose
     Command GetPlayerInput();
@@ -132,4 +133,5 @@ private:
     TrainerAI m_enemy_trainer;
     bool m_is_battle_over;
     BattleUI *m_battle_ui;
+    PokemonReader *m_pokemon_reader;
 };

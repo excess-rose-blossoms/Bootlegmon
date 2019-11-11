@@ -1,5 +1,11 @@
 #include "trainer.h"
 
+#pragma region Trainer
+
+#pragma endregion Trainer
+
+#pragma region Trainer AI
+
 // Makes decisions for the trainer. 
 Command TrainerAI::DecideCommand(std::string decision)
 {
@@ -40,3 +46,5 @@ int TrainerAI::DecideSwitchedPokemon()
     }
     return -1; //Should never reach here
 }
+
+#pragma endregion Trainer AI

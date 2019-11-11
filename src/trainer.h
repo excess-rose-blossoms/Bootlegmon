@@ -8,13 +8,22 @@
 class Trainer
 {
     public:
+        Trainer() : m_name("???UninitializedTrainer???"){}
+
         Trainer(Name name, Pokemon p1, Pokemon p2 = Pokemon(), Pokemon p3 = Pokemon(), Pokemon p4 = Pokemon(), Pokemon p5 = Pokemon(), Pokemon p6 = Pokemon())
             : m_pokemon_party{{p1},{p2},{p3},{p4},{p5},{p6}}
         {
             m_name = name;
+            // CHANGE
             m_num_pokemon = m_num_live_pokemon = 2;
 
             m_lead_pokemon = &m_pokemon_party[0];
+
+            //REMOVE
+            std::cout << "ADDRESS: " << &m_pokemon_party[0] << std::endl;
+            std::cout << "BEFOREIMNAME: " << GetLead()->GetImageName() << std::endl;
+            std::cout << "TRAINER INIT DONE" << std::endl;
+            std::cout << "ADDRESS: " << &m_pokemon_party[0] << std::endl;
         }
 
         inline Pokemon *GetLead() { return m_lead_pokemon; }
@@ -92,6 +101,7 @@ class Trainer
 class TrainerAI: public Trainer
 {
     public:
+        TrainerAI(): Trainer(){}
         TrainerAI(Name name, Pokemon p1, Pokemon p2) : Trainer(name, p1, p2){}
 
         // Makes decisions for the trainer.

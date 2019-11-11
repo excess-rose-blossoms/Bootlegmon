@@ -1,4 +1,6 @@
 {
-"Pikachu":{"hp":10,"moves":[1,2,5]},
-"Bikabu":{"hp":15,"moves":[1,2,3]}
+    "Mimikyu":{"dexnum": 1, "hp": 3, "atk": 1, "spd": 5},
+    "Bibikyu":{"dexnum": 1, "hp": 5, "atk": 2, "spd": 1},
+    "Pikachu":{"dexnum": 1, "hp": 3, "atk": 1, "spd": 3},
+    "Bikabu":{"dexnum": 1, "hp": 5, "atk": 0, "spd": 10}
 }

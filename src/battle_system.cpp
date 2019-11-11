@@ -3,11 +3,29 @@
 using namespace std;
 
 #pragma region Battle System
-BattleSystem::BattleSystem(BattleUI *battle_ui) 
-    : m_player_trainer("PLAYER", Pokemon(0, "Mimikyu", 3, 1, 5), Pokemon(1, "Bibikyu", 5, 2, 1)),
-      m_enemy_trainer("ENEMY", Pokemon(2, "Pikachu", 3, 1, 3), Pokemon(3, "Bikabu", 5, 0, 10)),
-      m_is_battle_over(false), m_battle_ui(battle_ui) 
+BattleSystem::BattleSystem(BattleUI *battle_ui, PokemonReader *pokemon_reader) 
+    : m_is_battle_over(false), m_battle_ui(battle_ui), m_pokemon_reader(pokemon_reader)
 {
+    // Initialize trainers
+    m_player_trainer = Trainer("PLAYER", pokemon_reader->MakePoke("Mimikyu"), pokemon_reader->MakePoke("Bibikyu"));
+    std::cout << "ADDRESS" << m_player_trainer.GetLead() << std::endl;
+    m_enemy_trainer = TrainerAI("ENEMY", pokemon_reader->MakePoke("Pikachu"), pokemon_reader->MakePoke("Bikabu"));
+    
+    //REMOVE
+    if (m_player_trainer.GetLead())
+    {
+        cout << "YES!" << m_player_trainer.GetLead()->GetName() <<endl;
+        std::cout << "ADDRESS" << m_player_trainer.GetLead() << std::endl;
+    }
+    else
+    {
+        cout << "NO!" << endl;
+    }
+
+    cout << "IMNAME:" << m_player_trainer.GetLead()->GetImageName() << endl;
+
+    // Initialize UI
+    cout << m_player_trainer.GetLead()->GetName() << endl;
     m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
     m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
     m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
@@ -358,20 +376,20 @@ void BattleUI::InitPokemonSwitchGroup(tgui::Gui &gui)
 
 void BattleUI::InitPokemonUI(tgui::Gui &gui)
 {
-    if (!m_player_pokemon_texture.loadFromFile("images/mimikyu.jpg"))
-    {
-        cout << "Cannot load image!" << endl;
-        return;
-    }
-    m_player_pokemon_sprite.setTexture(m_player_pokemon_texture);
+    // if (!m_player_pokemon_texture.loadFromFile("images/mimikyu.jpg")
+    // {
+    //     cout << "Cannot load image!" << endl;
+    //     return;
+    // }
+    // m_player_pokemon_sprite.setTexture(m_player_pokemon_texture);
     m_player_pokemon_sprite.setPosition(50.f, 70.f);
     m_sprite_pointers.push_back(&m_player_pokemon_sprite);
 
-    if (!m_enemy_pokemon_texture.loadFromFile("images/bikabu.jpg"))
-    {
-        cout << "Cannot load image!" << endl;
-    }
-    m_enemy_pokemon_sprite.setTexture(m_enemy_pokemon_texture);
+    // if (!m_enemy_pokemon_texture.loadFromFile("images/bikabu.jpg"))
+    // {
+    //     cout << "Cannot load image!" << endl;
+    // }
+    // m_enemy_pokemon_sprite.setTexture(m_enemy_pokemon_texture);
     m_enemy_pokemon_sprite.setPosition(1000.f, 70.f);
     m_sprite_pointers.push_back(&m_enemy_pokemon_sprite);
 

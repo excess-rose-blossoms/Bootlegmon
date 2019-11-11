@@ -9,7 +9,7 @@
 #include "trainer.h"
 #include "pokemon.h"
 #include "types.h"
-#include "poke_reader.h"
+#include "pokemon_reader.h" 
 #include "moves.h"
 
 using namespace std;
@@ -22,94 +22,39 @@ void RunBattleLoop(BattleSystem &battle_system)
     }
 }
 
-class Pokemon_Reader
-{
-    public:
-    Pokemon_Reader(std::string file_path)
-    {
-        boost::property_tree::read_json(file_path, root);
-    }
-
-    // Prints out the stats of the Pokemon with name pokemon_name.
-    void MakeReport(std::string pokemon_name)
-    {
-        if (!root.get_child_optional(pokemon_name).is_initialized())
-        {
-            cout << "NOT FOUND"<<endl;
-            return;
-        }
-
-        cout << "NAME: " << pokemon_name << endl;
-        for (boost::property_tree::ptree::value_type &pokemon: root.get_child(pokemon_name))
-        {
-            cout << pokemon.first << endl;
-            //cout << pokemon.second.get_value("hp") << endl;
-        }
-    }
-    private:
-        boost::property_tree::ptree root;
-};
-
 int main()
 {
-    Pokemon_Reader reader("json/pokemon_data.json");
-    reader.MakeReport("Pikachu");
-    // // Short alias for this namespace
-    // namespace pt = boost::property_tree;
+    // Create the window, GUI, and UI.
+    sf::RenderWindow window{{1600, 1000}, "Bootlegmon"};
+    tgui::Gui gui{window};
 
-    // // Create a root
-    // pt::ptree root;
+    BattleUI battle_ui(gui);
+    PokemonReader pokemon_reader(PokemonStatsFilePath);
 
-    // // Load the json file in this ptree
-    // pt::read_json("json/pokemon_data.json", root);
+    // Create a second thread to run the battle loop.
+    BattleSystem battle_system(&battle_ui, &pokemon_reader);
+    thread battle_thread(RunBattleLoop, ref(battle_system));
 
+    // Poll and draw widgets.
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+            {
+                window.close();
+            }
 
-    // ////////////////////
-    // /// READING      ///
-    // ////////////////////
+            gui.handleEvent(event); // Pass the event to the widgets
+        }
 
-    // std::cout << "Reading pokemon_data.json :" << std::endl;
-    // //string pika_name = root.get<string>("name");
-    // // pt::ptree &pokemon = root.get_child("pikachu");
-
-    // for (pt::ptree::value_type &pokemon: root.get_child("pikachu"))
-    // {
-    //     cout << pokemon.second.get_value("hp") << endl;
-    // }
+        window.clear();
+        gui.draw(); // Draw all widgets
+        battle_ui.DrawAllSprites(window); // Draw all sprites
+        window.display();
+    }
 }
-
-// int main()
-// {
-//     // Create the window, GUI, and UI.
-//     sf::RenderWindow window{{1600, 1000}, "Bootlegmon"};
-//     tgui::Gui gui{window};
-
-//     BattleUI battle_ui(gui);
-
-//     // Create a second thread to run the battle loop.
-//     BattleSystem battle_system(&battle_ui);
-//     thread battle_thread(RunBattleLoop, ref(battle_system));
-
-//     // Poll and draw widgets.
-//     while (window.isOpen())
-//     {
-//         sf::Event event;
-//         while (window.pollEvent(event))
-//         {
-//             if (event.type == sf::Event::Closed)
-//             {
-//                 window.close();
-//             }
-
-//             gui.handleEvent(event); // Pass the event to the widgets
-//         }
-
-//         window.clear();
-//         gui.draw(); // Draw all widgets
-//         battle_ui.DrawAllSprites(window); // Draw all sprites
-//         window.display();
-//     }
-// }
 
 // #include <TGUI/TGUI.hpp>
 // #include "poke_reader.h"

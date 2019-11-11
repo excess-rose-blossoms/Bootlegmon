@@ -18,6 +18,7 @@
                 "src/trainer.cpp",
                 "src/pokemon.cpp",
                 "src/poke_reader.cpp",
+                "src/pokemon_reader.cpp",
                 "-o",
                 "build/Bootlegmon"
             ],

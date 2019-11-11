@@ -39,14 +39,7 @@ class Pokemon
         #pragma endregion Accessors / Mutators
 
         // Prints out a report on the Pokemon's stats. Used for debugging purposes.
-        void ReportStats()
-        {
-            std::cout << "DEX NUMBER: " << m_dex_number << std::endl;
-            std::cout << "POKEMON: " << m_name << std::endl;
-            std::cout << "HP: " << m_hp << std::endl;
-            std::cout << "ATK: " << m_atk << std::endl;
-            std::cout << "SPD: " << m_spd << std::endl;
-        }
+        void ReportStats();
 
     private:
         int m_dex_number;
