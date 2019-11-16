@@ -1,6 +1,5 @@
 TODO:
 Short-term
-- Fix the temp implementation of m_num_pokemon in Trainer constructor.
 - Create the move menu with 2 moves: physical and special.
 - Begin implementing real stats.
 - Change the scraping script to produce JSONs.

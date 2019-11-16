@@ -18,7 +18,8 @@ void RunBattleLoop(BattleSystem &battle_system)
 {
     while (!battle_system.IsBattleOver())
     {
-        battle_system.RunTurn();
+        battle_system.RunTurnDebug();
+        //battle_system.RunTurn();
     }
 }
 
