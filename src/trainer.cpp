@@ -7,8 +7,22 @@ Trainer::Trainer(Name name, Pokemon p1, Pokemon p2, Pokemon p3, Pokemon p4, Poke
     :   m_pokemon_party{{p1},{p2},{p3},{p4},{p5},{p6}}
 {
     m_name = name;
-    // CHANGE
-    m_num_pokemon = m_num_live_pokemon = 2;
+
+    // Count the number of Pokemon in the party
+    m_num_pokemon = m_num_live_pokemon = 0;
+    for (int i = 0; i < 6; i++)
+    {
+        if (m_pokemon_party[i].GetName() == InvalidPokemonName)
+        {
+            break;
+        } 
+        else
+        {
+            m_num_pokemon++;
+            m_num_live_pokemon++;
+        }
+    }
+    
     m_lead_pokemon = &m_pokemon_party[0];
 }
 
