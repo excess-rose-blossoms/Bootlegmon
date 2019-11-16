@@ -1,9 +1,9 @@
 TODO:
 Short-term
-- Create the move menu with 2 moves: physical and special.
+- Implement prototype moves
 - Begin implementing real stats.
 - Change the scraping script to produce JSONs.
 
 Medium-term
 - Implement a picking screen
-- Implement moves
+- Implement all moves

@@ -1,6 +1,6 @@
 {
-    "Mimikyu":{"dexnum": 1, "hp": 3, "atk": 1, "spd": 5},
-    "Bibikyu":{"dexnum": 1, "hp": 5, "atk": 2, "spd": 1},
-    "Pikachu":{"dexnum": 1, "hp": 3, "atk": 1, "spd": 3},
-    "Bikabu":{"dexnum": 1, "hp": 5, "atk": 0, "spd": 10}
+    "Mimikyu":{"dexnum": 1, "hp": 3, "atk": 1, "spd": 5, "movelearnset":[1, 2, 3, 4]},
+    "Bibikyu":{"dexnum": 2, "hp": 5, "atk": 2, "spd": 1, "movelearnset": [1, 2, 3, 4]},
+    "Pikachu":{"dexnum": 3, "hp": 3, "atk": 1, "spd": 3, "movelearnset": [1, 2, 3]},
+    "Bikabu":{"dexnum": 4, "hp": 5, "atk": 0, "spd": 10, "movelearnset": [1, 2]}
 }

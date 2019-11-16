@@ -21,4 +21,5 @@ struct Command
 };
 
 const std::string InvalidPokemonName = "???Missingno???";
-const std::string PokemonStatsFilePath = "json/pokemon_data.json";
+const std::string PokemonDataFilePath = "json/pokemon_data.json";
+const std::string MoveDataFilePath = "json/move_data.json";

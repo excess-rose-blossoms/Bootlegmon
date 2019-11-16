@@ -25,37 +25,43 @@ void RunBattleLoop(BattleSystem &battle_system)
 
 int main()
 {
-    // Create the window, GUI, and UI.
-    sf::RenderWindow window{{1600, 1000}, "Bootlegmon"};
-    tgui::Gui gui{window};
-
-    BattleUI battle_ui(gui);
-    PokemonReader pokemon_reader(PokemonStatsFilePath);
-
-    // Create a second thread to run the battle loop.
-    BattleSystem battle_system(&battle_ui, &pokemon_reader);
-    thread battle_thread(RunBattleLoop, ref(battle_system));
-
-    // Poll and draw widgets.
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-
-            gui.handleEvent(event); // Pass the event to the widgets
-        }
-
-        window.clear();
-        gui.draw(); // Draw all widgets
-        battle_ui.DrawAllSprites(window); // Draw all sprites
-        window.display();
-    }
+    PokemonReader pokemon_reader(PokemonDataFilePath, MoveDataFilePath);
+    
 }
+
+// int main()
+// {
+//     // Create the window, GUI, and UI.
+//     sf::RenderWindow window{{1600, 1000}, "Bootlegmon"};
+//     tgui::Gui gui{window};
+
+//     BattleUI battle_ui(gui);
+//     PokemonReader pokemon_reader(PokemonDataFilePath);
+
+//     // Create a second thread to run the battle loop.
+//     BattleSystem battle_system(&battle_ui, &pokemon_reader);
+//     thread battle_thread(RunBattleLoop, ref(battle_system));
+
+//     // Poll and draw widgets.
+//     while (window.isOpen())
+//     {
+//         sf::Event event;
+//         while (window.pollEvent(event))
+//         {
+//             if (event.type == sf::Event::Closed)
+//             {
+//                 window.close();
+//             }
+
+//             gui.handleEvent(event); // Pass the event to the widgets
+//         }
+
+//         window.clear();
+//         gui.draw(); // Draw all widgets
+//         battle_ui.DrawAllSprites(window); // Draw all sprites
+//         window.display();
+//     }
+// }
 
 // #include <TGUI/TGUI.hpp>
 // #include "poke_reader.h"
