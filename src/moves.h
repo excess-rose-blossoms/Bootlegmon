@@ -9,8 +9,9 @@ struct Move
     Name name;
     Power power;
     Accuracy accuracy;
-    Move(int index_num, Name name, Power power, Accuracy accuracy) : index_num(index_num), name(name), power(power), accuracy(accuracy){}
+
     Move() : name(InvalidMoveName) {}
+    Move(int index_num, Name name, Power power, Accuracy accuracy) : index_num(index_num), name(name), power(power), accuracy(accuracy){}
 
     // Prints out info about the move. Used for debugging.
     void MakeReport()

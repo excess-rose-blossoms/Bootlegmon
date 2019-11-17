@@ -4,6 +4,7 @@
 #include <string>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/foreach.hpp>
 #include "pokemon.h"
 #include "moves.h"
 
@@ -24,6 +25,9 @@ class PokemonReader
 
         // Prints out the stats of the move with move index move_index. Used for debugging.
         void MakeMoveReport(int move_index);
+
+        // Blank function used for prototyping.
+        void PrototypeGet();
 
     private:
         boost::property_tree::ptree poke_root;

@@ -12,6 +12,7 @@ PokemonReader::PokemonReader(std::string pokemon_file_path, std::string move_fil
 // Returns a Pokemon object with the stats of the pokemon with name pokemon_name.
 Pokemon PokemonReader::MakePoke(std::string pokemon_name)
 {
+    // Validity check
     if (!poke_root.get_child_optional(pokemon_name).is_initialized())
     {
         cout << "Error with PokemonReader::MakePoke - POKEMON NOT FOUND." << endl;
@@ -19,11 +20,21 @@ Pokemon PokemonReader::MakePoke(std::string pokemon_name)
         return error_poke;
     }
 
+    // Init Pokemon
     Pokemon new_poke(   poke_root.get<int>(pokemon_name+".dexnum"),
                         pokemon_name,
                         poke_root.get<int>(pokemon_name+".hp"),
                         poke_root.get<int>(pokemon_name+".atk"),
                         poke_root.get<int>(pokemon_name+".spd"));
+
+    // Get moves from learnset
+    int counter = 0;
+    BOOST_FOREACH(boost::property_tree::ptree::value_type &v, poke_root.get_child(pokemon_name+".movelearnset"))
+    {
+        Move new_move = MakeMove(v.second.get<int>(""));
+        new_poke.SetMove(counter, new_move);
+        counter++;
+    }
 
     return new_poke;
 }
@@ -80,4 +91,13 @@ void PokemonReader::MakeMoveReport(int move_index)
     cout << "POWER: " << move_root.get<int>(move_index_string+".power") << endl;
     cout << "ACCURACY: " << move_root.get<int>(move_index_string+".accuracy") << endl;
     cout << endl;
+}
+
+// Blank function used for prototyping.
+void PokemonReader::PrototypeGet()
+{
+    BOOST_FOREACH(boost::property_tree::ptree::value_type &v, poke_root.get_child("Mimikyu.movelearnset"))
+    {
+        Move new_move = MakeMove(v.second.get<int>(""));
+    }
 }
