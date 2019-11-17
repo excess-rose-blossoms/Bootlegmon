@@ -5,6 +5,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include "pokemon.h"
+#include "moves.h"
 
 class PokemonReader
 {
@@ -15,8 +16,14 @@ class PokemonReader
         // Returns a Pokemon object with the stats of the pokemon with name pokemon_name.
         Pokemon MakePoke(std::string pokemon_name);
 
+       // Returns a Move struct with the stats of the move with index move_index.
+        Move MakeMove(int move_index);
+
         // Prints out the stats of the Pokemon with name pokemon_name. Used for debugging.
         void MakePokemonReport(std::string pokemon_name);
+
+        // Prints out the stats of the move with move index move_index. Used for debugging.
+        void MakeMoveReport(int move_index);
 
     private:
         boost::property_tree::ptree poke_root;

@@ -1,6 +1,6 @@
 {
-    "1":{"name": "1DMG", "power": 1},
-    "2":{"name": "2DMG", "power": 2},
-    "3":{"name": "DO NOTHING", "power": 0},
-    "4":{"name": "INSTAKILL", "power": 9999} 
+    "1":{"name": "1DMG", "power": 1, "accuracy": 100},
+    "2":{"name": "2DMG", "power": 2, "accuracy": 100},
+    "3":{"name": "DO NOTHING", "power": 0, "accuracy": 100},
+    "4":{"name": "INSTAKILL", "power": 9999, "accuracy": 100} 
 }

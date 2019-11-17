@@ -1,18 +1,24 @@
+#pragma once
+
 #include <string>
 #include "types.h"
 
 struct Move
 {
+    int index_num;
     Name name;
     Power power;
     Accuracy accuracy;
-    Move(Name name, Power power, Accuracy accuracy) : name(name), power(power), accuracy(accuracy){}
-};
+    Move(int index_num, Name name, Power power, Accuracy accuracy) : index_num(index_num), name(name), power(power), accuracy(accuracy){}
+    Move() : name(InvalidMoveName) {}
 
-// Used for prototyping
-struct SimpleMove
-{
-    Name name;
-    Power power;
-    SimpleMove(Name name, Power power): name(name), power(power){}
+    // Prints out info about the move. Used for debugging.
+    void MakeReport()
+    {
+        std::cout << "INDEX: " << index_num << std::endl;
+        std::cout << "NAME: " << name << std::endl;
+        std::cout << "POWER: " << power << std::endl;
+        std::cout << "ACCURACY: " << accuracy << std::endl;
+        std::cout << std::endl;
+    }
 };

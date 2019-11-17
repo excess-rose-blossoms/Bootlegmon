@@ -26,7 +26,11 @@ void RunBattleLoop(BattleSystem &battle_system)
 int main()
 {
     PokemonReader pokemon_reader(PokemonDataFilePath, MoveDataFilePath);
-    
+    for (int i = 0; i < 4; i++)
+    {
+        Move move = pokemon_reader.MakeMove(i + 1);
+        move.MakeReport();
+    }
 }
 
 // int main()
