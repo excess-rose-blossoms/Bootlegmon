@@ -1,6 +1,5 @@
 TODO:
 Short-term
-- Have the JSON reader read in moves data based on the movelearnset array in the Pokemon data
 - Integrate the read moves with the battle loop
 - Begin implementing real stats.
 - Change the scraping script to produce JSONs.
