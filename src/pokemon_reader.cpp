@@ -21,11 +21,11 @@ Pokemon PokemonReader::MakePoke(std::string pokemon_name)
     }
 
     // Init Pokemon
-    Pokemon new_poke(   poke_root.get<int>(pokemon_name+".dexnum"),
-                        pokemon_name,
-                        poke_root.get<int>(pokemon_name+".hp"),
-                        poke_root.get<int>(pokemon_name+".atk"),
-                        poke_root.get<int>(pokemon_name+".spd"));
+    Pokemon new_poke(poke_root.get<int>(pokemon_name + ".dexnum"),
+                     pokemon_name,
+                     poke_root.get<int>(pokemon_name + ".hp"),
+                     poke_root.get<int>(pokemon_name + ".atk"),
+                     poke_root.get<int>(pokemon_name + ".spd"));
 
     // Get moves from learnset
     int counter = 0;

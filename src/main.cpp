@@ -25,6 +25,7 @@ void RunBattleLoop(BattleSystem &battle_system)
 
 int main()
 {
+
     PokemonReader pokemon_reader(PokemonDataFilePath, MoveDataFilePath);
     pokemon_reader.MakePoke("Mimikyu").MakeReport();
     pokemon_reader.MakePoke("Bibikyu").MakeReport();

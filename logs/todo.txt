@@ -7,3 +7,6 @@ Short-term
 Medium-term
 - Implement a picking screen
 - Implement all moves
+
+Long-term
+- Pretty up the GUI
