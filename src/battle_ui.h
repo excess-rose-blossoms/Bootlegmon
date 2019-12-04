@@ -40,7 +40,7 @@ public:
     void DisplayPChoice(Trainer *trainer, Pokemon pokemon_party[], int size = 6);
 
     // Displays the Move Choice widgets
-    void DisplayMChoice();
+    void DisplayMChoice(Trainer *trainer);
 
     // Waits until m_is_user_ready has been set to true before setting it to false and proceeding.
     void WaitForUser();

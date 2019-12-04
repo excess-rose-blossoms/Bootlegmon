@@ -53,7 +53,7 @@ Command BattleSystem::GetPlayerMoveInput()
 {
     Command move_command;
 
-    m_battle_ui->DisplayMChoice();
+    m_battle_ui->DisplayMChoice(&m_player_trainer);
     move_command = m_battle_ui->GetLastCommand();
     return move_command;
 }
@@ -144,11 +144,15 @@ void BattleSystem::RunTurn()
     for (int i = 0; i < 2; i++)
     {
         // FIGHT selected
-        if (trainers_in_order[i]->GetRecentCommand().command == "FIGHT")
+        Command recent_command = trainers_in_order[i]->GetRecentCommand();
+        if (recent_command.command == "FIGHT")
         {
-            // Decrement health appropriately
+            // Decrement health appropriately using the move!
             int target_index = (i == 0) ? 1 : 0;
-            int damage_taken = trainers_in_order[i]->GetLead()->Attack(trainers_in_order[target_index]->GetLead());
+            Move used_move = trainers_in_order[i]->GetLead()->GetMove(recent_command.selection);
+            int damage_taken = used_move.power;
+            trainers_in_order[target_index]->GetLead()->TakeDamage(damage_taken);
+            //trainers_in_order[i]->GetLead()->Attack(trainers_in_order[target_index]->GetLead());
 
             if (trainers_in_order[target_index] == &m_player_trainer)
             {
@@ -159,7 +163,8 @@ void BattleSystem::RunTurn()
                 m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
             }
 
-            m_battle_ui->DisplayText(trainers_in_order[i]->GetLeadName() + " attacked! " + trainers_in_order[target_index]->GetLeadName() + " took " + to_string(damage_taken) + " damage!");
+            m_battle_ui->DisplayText(trainers_in_order[i]->GetLeadName() + " used " + used_move.name + "! " +
+                                     trainers_in_order[target_index]->GetLeadName() + " took " + to_string(damage_taken) + " damage!");
             m_battle_ui->DisplayText(trainers_in_order[target_index]->GetLeadName() + " has " + to_string(trainers_in_order[target_index]->GetLeadHP()) + " HP left!");
 
             // If opposing Pokemon was knocked out by the attack
@@ -202,7 +207,10 @@ void BattleSystem::RunTurn()
                         m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
                         m_battle_ui->SetEnemyPokemonSprite(m_enemy_trainer.GetLead()->GetImageName());
                     }
-                }     
+                }
+                
+                // Move on to the next turn
+                break;
             }
         }
         // NOTHING selected

@@ -1,5 +1,6 @@
 TODO:
 Short-term
+- Clean up the implementation of attacking, especially attack(). Try to isolate the classes a bit more.
 - Integrate the read moves with the battle loop
 - Begin implementing real stats.
 - Change the scraping script to produce JSONs.

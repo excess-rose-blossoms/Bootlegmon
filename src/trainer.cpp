@@ -19,7 +19,7 @@ Trainer::Trainer(Name name, Pokemon p1, Pokemon p2, Pokemon p3, Pokemon p4, Poke
         else
         {
             m_num_pokemon++;
-            m_num_live_pokemon++;
+    m_num_live_pokemon++;
         }
     }
     
@@ -85,7 +85,7 @@ Command TrainerAI::DecideCommand(std::string decision)
     else if (decision == "FIGHT")
     {
         decided_command.command = "FIGHT";
-        decided_command.selection = -1;
+        decided_command.selection = 0;
     }
     else 
     {

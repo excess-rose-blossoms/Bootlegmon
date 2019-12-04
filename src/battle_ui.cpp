@@ -308,7 +308,6 @@ void BattleUI::DisplayPChoice(Trainer *trainer, Pokemon pokemon_party[], int siz
             {
                 name = name + " (FAINTED)";
             }
-            tgui::Label::Ptr sss = m_switch_pokemon_labels[i];
             m_switch_pokemon_labels[i]->setText(name);
             m_switch_pokemon_labels[i]->getRenderer()->setBackgroundColor(bg_color);
         }
@@ -323,16 +322,26 @@ void BattleUI::DisplayPChoice(Trainer *trainer, Pokemon pokemon_party[], int siz
     WaitForUser();
 }
 
-void BattleUI::DisplayMChoice()
+void BattleUI::DisplayMChoice(Trainer *trainer)
 {
     HideBottomBar();
     m_move_group->setVisible(true);
 
     for (int i = 0; i < 4; i++)
     {
-        m_move_labels[i]->setText("Move " + to_string(i + 1));
+        Move current_move = trainer->GetLead()->GetMove(i);
+        if (current_move.name != InvalidMoveName)
+        {
+            m_move_labels[i]->setText(current_move.name);
+            m_move_labels[i]->getRenderer()->setBackgroundColor(bg_color);
+        }
+        else
+        {
+            m_move_labels[i]->setText("");
+            m_move_labels[i]->getRenderer()->setBackgroundColor(inverse_color);
+            m_move_labels[i]->setVisible(false);
+        }
     }
-
     WaitForUser();
 }
 

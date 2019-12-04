@@ -39,7 +39,7 @@ Pokemon PokemonReader::MakePoke(std::string pokemon_name)
     return new_poke;
 }
 
-// Returns a Pokemon object with the stats of the pokemon with name pokemon_name.
+// Returns a move object with move index of move_index.
 Move PokemonReader::MakeMove(int move_index)
 {
     string move_index_string = to_string(move_index);
