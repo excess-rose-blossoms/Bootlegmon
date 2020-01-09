@@ -20,16 +20,11 @@ Command BattleSystem::GetPlayerInput()
     Command input_command;
     do 
     {
-        // Read in input
+        // Get UI to take player input
         m_battle_ui->DisplayFSChoice();
         
-
         if (m_battle_ui->GetLastCommand().command == "FIGHT")
         {
-            // Old implementation
-            // input_command.command = "FIGHT";
-            // input_command.selection = -1;
-
             Command move_command = GetPlayerMoveInput();
 
             input_command.command = move_command.command;
@@ -87,14 +82,20 @@ Command BattleSystem::GetPlayerSwitchInput(bool allow_cancel)
 // Meant to be called in place of RunTurn. Used for debugging or prototyping new features.
 void BattleSystem::RunTurnDebug()
 {
-    while (true)
-    {
-        Command debug_command = GetPlayerInput();
-        cout << "COMMAND: " << debug_command.command << endl;
-        cout << "SELECTION: " << debug_command.selection << endl;
-    }
-    
-    return;
+    Trainer *trainers_in_order[2];
+    DetermineFirstMover(trainers_in_order);
+
+    cout << trainers_in_order[0]->GetLeadName() << endl;
+    cout << trainers_in_order[1]->GetLeadName() << endl;
+}
+
+// Sets the trainers_in_order array so that the pointer to the first mover comes first.
+void BattleSystem::DetermineFirstMover(Trainer *(&trainers_in_order)[2])
+{
+    bool does_player_move_first = (m_player_trainer.GetLeadSpd() > m_enemy_trainer.GetLeadSpd());
+
+    trainers_in_order[0] = does_player_move_first ? &m_player_trainer : &m_enemy_trainer;
+    trainers_in_order[1] = does_player_move_first ? &m_enemy_trainer : &m_player_trainer;
 }
 
 // Run repeatedly to create a battle. Gets the player's input for their turn then the enemy's.
@@ -109,15 +110,8 @@ void BattleSystem::RunTurn()
 
     // Sort trainers to move in order according to speed.
     Trainer *trainers_in_order[2];
-    trainers_in_order[0] = &m_player_trainer;
-    trainers_in_order[1] = &m_enemy_trainer;
+    DetermineFirstMover(trainers_in_order);
 
-    if (m_enemy_trainer.GetLeadSpd() > m_player_trainer.GetLeadSpd())
-    {
-        trainers_in_order[0] = &m_enemy_trainer;
-        trainers_in_order[1] = &m_player_trainer;
-    }
-    
     // Before fighting, check to see if there are any switches.
     for (int i = 0; i < 2;i++)
     {
@@ -127,16 +121,11 @@ void BattleSystem::RunTurn()
             m_battle_ui->DisplayText(trainers_in_order[i]->GetName() + " withdrew " + trainers_in_order[i]->GetLeadName() + " and sent in " + switch_pokemon->GetName() + "!");
             trainers_in_order[i]->SwitchPokemon(trainers_in_order[i]->GetRecentCommand().selection);
             
-            if (trainers_in_order[i] == &m_player_trainer)
-            {
-                m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
-                m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
-            }
-            else 
-            {
-                m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
-                m_battle_ui->SetEnemyPokemonSprite(m_enemy_trainer.GetLead()->GetImageName());
-            }
+            // Update the UI
+            m_battle_ui->SetPlayerPokemonHpLabelText(to_string(m_player_trainer.GetLeadHP()));
+            m_battle_ui->SetPlayerPokemonSprite(m_player_trainer.GetLead()->GetImageName());
+            m_battle_ui->SetEnemyPokemonHpLabelText(to_string(m_enemy_trainer.GetLeadHP()));
+            m_battle_ui->SetEnemyPokemonSprite(m_enemy_trainer.GetLead()->GetImageName());
         }
     }
 
@@ -152,7 +141,6 @@ void BattleSystem::RunTurn()
             Move used_move = trainers_in_order[i]->GetLead()->GetMove(recent_command.selection);
             int damage_taken = used_move.power;
             trainers_in_order[target_index]->GetLead()->TakeDamage(damage_taken);
-            //trainers_in_order[i]->GetLead()->Attack(trainers_in_order[target_index]->GetLead());
 
             if (trainers_in_order[target_index] == &m_player_trainer)
             {
@@ -222,10 +210,4 @@ void BattleSystem::RunTurn()
                 m_battle_ui->DisplayText(m_enemy_trainer.GetLeadName() + " did nothing! Let's go, self-care!");
         }
     }
-}
-
-void BattleSystem::PrintReport()
-{
-    cout << "Battle between " << m_player_trainer.GetName() << " (player) using " << m_player_trainer.GetLead()->GetName() 
-    << " and " << m_enemy_trainer.GetName() << " (enemy) using " << m_enemy_trainer.GetLead()->GetName() << "." << endl;
 }

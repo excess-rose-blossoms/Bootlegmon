@@ -1,9 +1,10 @@
 TODO:
 Short-term
-- Clean up the implementation of attacking, especially attack(). Try to isolate the classes a bit more.
+- Clean up the implementation of RunTurn, especially switching and battle phases.
 - Integrate the read moves with the battle loop
 - Begin implementing real stats.
 - Change the scraping script to produce JSONs.
+- Check whether battle ends properly when win/lose
 
 Medium-term
 - Implement a picking screen
@@ -11,3 +12,8 @@ Medium-term
 
 Long-term
 - Pretty up the GUI
+
+
+BUGS
+- Game sometimes crashes after a Pokemon is knocked out. Unable to replicate.
+    malloc: Incorrect checksum for freed object 0x7ff6b4e5a168: probably modified after being freed.

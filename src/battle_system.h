@@ -24,14 +24,12 @@ public:
     // The battle ends when one Pokemon's HP runs out, upon which m_is_battle_over is set to true.
     void RunTurn();
 
+    void DetermineFirstMover(Trainer *(&trainers_in_order)[2]);
+
     // Meant to be called in place of RunTurn. Used for debugging or prototyping new features.
     void RunTurnDebug();
 
-    // Accessor for m_is_battle_over
     inline bool IsBattleOver() { return m_is_battle_over; };
-
-    // Prints the participant names.
-    void PrintReport();
 
     Command GetPlayerSwitchInput(bool allow_cancel = false);
 

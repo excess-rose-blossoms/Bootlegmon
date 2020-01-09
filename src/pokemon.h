@@ -11,12 +11,6 @@ class Pokemon
         Pokemon(int dex_number, Name name, Stat hp, Stat atk, Stat spd, Move m1 = Move(), Move m2 = Move(), Move m3 = Move(), Move m4 = Move());
         Pokemon() : m_name(InvalidPokemonName) {}
 
-        int Attack(Pokemon *enemy) 
-        { 
-            enemy->TakeDamage(m_atk);
-            return m_atk;
-        }
-
         void TakeDamage(int damage) { m_hp = ((m_hp - damage) >= 0) ? (m_hp - damage) : 0; }
 
         bool HasFainted() { return (m_hp <= 0); }
